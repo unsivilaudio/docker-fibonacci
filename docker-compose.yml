@@ -1,28 +1,13 @@
 version: '3'
 services:
-    postgres:
-        image: 'postgres:latest'
-        environment:
-            - POSTGRES_PASSWORD=postgres_password
-    redis:
-        image: 'redis:latest'
-    nginx:
-        depends_on:
-            - api
-            - client
-        restart: always
-        build:
-            dockerfile: Dockerfile.dev
-            context: ./nginx
-        ports:
-            - '80:80'
-    api:
-        build:
-            dockerfile: Dockerfile.dev
-            context: ./server
-        volumes:
-            - /app/node_modules
-            - ./server:/app
+    client:
+        image: 'unsivilaudio/multi-client-04-29'
+        mem_limit: 128m
+        hostname: client
+    server:
+        image: 'unsivilaudio/multi-server-04-29'
+        mem_limit: 128m
+        hostname: api
         environment:
             - REDIS_HOST=redis
             - REDIS_PORT=6379
@@ -32,21 +17,15 @@ services:
             - PGPASSWORD=postgres_password
             - PGPORT=5432
     worker:
-        build:
-            dockerfile: Dockerfile.dev
-            context: ./worker
-        volumes:
-            - /app/node_modules
-            - ./worker:/app
+        image: 'unsivilaudio/multi-client-04-29'
+        mem_limit: 128m
+        hostname: worker
         environment:
             - REDIS_HOST=redis
             - REDIS_PORT=6379
-    client:
-        build:
-            dockerfile: Dockerfile.dev
-            context: ./client
-        volumes:
-            - /home/node/app/node_modules
-            - ./client:/home/node/app
-        environment:
-            - WDS_SOCKET_PORT=0
+    nginx:
+        image: 'unsivilaudio/multi-nginx-04-29'
+        mem_limit: 128m
+        hostname: nginx
+        ports:
+            - '80:80'
