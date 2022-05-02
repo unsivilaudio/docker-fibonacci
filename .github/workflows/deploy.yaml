@@ -57,6 +57,6 @@ jobs:
       - name: Apply
         run: |-
           kubectl apply -f k8s
-          kubectl set image deployments/server-deployment server=unsivilaudio/multi-server:${{ env.SHA }}
-          kubectl set image deployments/worker-deployment worker=unsivilaudio/multi-worker:${{ env.SHA }}
-          kubectl set image deployments/client-deployment client=unsivilaudio/multi-client:${{ env.SHA }}
+          kubectl set image deployments/server-depl server=unsivilaudio/multi-server:${{ env.SHA }}
+          kubectl set image deployments/worker-depl worker=unsivilaudio/multi-worker:${{ env.SHA }}
+          kubectl set image deployments/client-depl client=unsivilaudio/multi-client:${{ env.SHA }}
