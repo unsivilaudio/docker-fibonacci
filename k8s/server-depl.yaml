@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: server-depl
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       component: server
@@ -34,8 +34,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: server-srv
+  name: server-cluster-ip-svc
 spec:
+  type: ClusterIP
   selector:
     component: server
   ports:

@@ -22,8 +22,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-srv
+  name: postgres-cluster-ip-svc
 spec:
+  type: ClusterIP
   selector:
     component: postgres
   ports:
