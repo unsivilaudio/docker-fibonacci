@@ -17,7 +17,7 @@ spec:
           image: unsivilaudio/multi-worker
           env:
             - name: REDIS_HOST
-              value: redis-srv
+              value: redis-cluster-ip-svc
             - name: REDIS_PORT
               value: '6379'
 ---

@@ -16,8 +16,12 @@ spec:
         - name: server
           image: unsivilaudio/multi-server
           env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-svc
+            - name: REDIS_PORT
+              value: '6379'
             - name: PGHOST
-              value: postgres-srv
+              value: postgres-cluster-ip-svc
             - name: PGPORT
               value: '5432'
             - name: PGDATABASE
@@ -25,11 +29,10 @@ spec:
             - name: PGUSER
               value: 'postgres'
             - name: PGPASSWORD
-              value: 'postgrespassword'
-            - name: REDIS_HOST
-              value: redis-srv
-            - name: REDIS_PORT
-              value: '6379'
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
 ---
 apiVersion: v1
 kind: Service
